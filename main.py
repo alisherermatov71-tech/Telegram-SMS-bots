@@ -2,6 +2,10 @@
 # Telegram SMM бот. Бір файл, тек стандартты кітапхана (Pydroid 3 / Python 3.8+)
 import json, os, time, threading, traceback, html
 import urllib.request, urllib.parse, urllib.error
+import os
+from flask import Flask
+from threading import Thread
+
 
 # ===================== БАПТАУЛАР: тек осы жерді толтырыңыз =====================
 TOKEN = "8925834126:AAH8F1eQ50IU4hw-idMI7-aXd3pLkDAt3Bs"   # @BotFather-ден алған токен
@@ -774,7 +778,30 @@ def main():
             if "callback_query" in up:
                 threading.Thread(target=safe, args=(on_callback, up["callback_query"]), daemon=True).start()
             elif "message" in up:
-                threading.Thread(target=safe, args=(on_message, up["message"]), daemon=True).start()
-
+                threading.Thread(target=safe, args=(on_message, up["message"]), daemon=True).
 
 main()
+
+
+app = Flask('')
+
+
+@app.route('/')
+def home():
+  return "I am alive!"
+
+
+def run():
+  port = int(os.environ.get('PORT', 10000))
+  app.run(host='0.0.0.0', port=port)
+
+
+def keep_alive():
+  t = Thread(target=run)
+  t.start()
+
+
+if __name__ == '__main__':
+  keep_alive()
+  main()
+
