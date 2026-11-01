@@ -775,13 +775,14 @@ def main():
             continue
         for up in r["result"]:
             offset = up["update_id"] + 1
-            if "callback_query" in up:
-                threading.Thread(target=safe, args=(on_callback, up["callback_query"]), daemon=True).start()
+                        if "callback_query" in up:
+              threading.Thread(
+                  target=safe, args=(on_callback, up["callback_query"]), daemon=True
+              ).start()
             elif "message" in up:
-                threading.Thread(target=safe, args=(on_message, up["message"]), daemon=True).
-
-main()
-
+              threading.Thread(
+                  target=safe, args=(on_message, up["message"]), daemon=True
+              ).start()
 
 app = Flask('')
 
